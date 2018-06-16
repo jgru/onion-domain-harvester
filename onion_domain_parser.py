@@ -11,7 +11,7 @@ class AbstractOnionDomainParser(ABC):
         super().__init__()
 
     @abstractmethod
-    def parse_market_list(self):
+    def parse_domain_list(self):
         pass
 
     @abstractmethod

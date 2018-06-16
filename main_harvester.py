@@ -18,33 +18,20 @@ def tor_setup():
     def getaddrinfo(*args):
         return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
 
-    #socket.getaddrinfo = getaddrinfo
+    socket.getaddrinfo = getaddrinfo
 
 
 def main():
-    '''
-    htmlHarvester = HtmlHarvester("url", None, None)
-    is_obfuscated = htmlHarvester.check_tor_setup()
-    print(is_obfuscated)
-    '''
 
-    #tor_setup()
+    tor_setup()
 
+    deep_parser = DeepdotwebParser()
+    deep_parser.parse_domain_list()
+    deep_parser.print_harvested_domains()
 
-
-    deepParser = DeepdotwebParser()
-    deepParser.parse_market_list()
-    deepParser.print_harvested_domains()
-
-    '''
     db_handler = OnionDbHandler(DB_PATH)
-    #db_contents = db_handler.retrieve_domains()
-    #db_handler.update_db(db_contents)
-    db_handler.update_db(deepParser.onion_domains)
-    # for c in db_contents:
-    #    print(c)
-    '''
+    db_handler.update_db(deep_parser.onion_domains)
+
 
 if __name__ == "__main__":
-
     main()

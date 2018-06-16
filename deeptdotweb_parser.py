@@ -29,7 +29,7 @@ class DeepdotwebParser(AbstractOnionDomainParser):
 
         self.onion_domains = set()
 
-    def parse_market_list(self):
+    def parse_domain_list(self):
         # create a list of threads
         threads = []
         results = [[] for t in self.targets]
@@ -59,9 +59,8 @@ class DeepdotwebParser(AbstractOnionDomainParser):
     @staticmethod
     def parse_html(target_url):
         print(target_url)
-        htmlHarvester = HtmlHarvester(target_url, None, None)
-        html = htmlHarvester.load_cloudflare_page()
-
+        harvester = HtmlHarvester(target_url, None, None)
+        html = harvester.load_cloudflare_page()
         # print(html)
         soup = BeautifulSoup(html, "html.parser")
         # print(soup)
