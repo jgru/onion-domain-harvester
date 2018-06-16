@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 __author__ = 'gru'
 
-import sqlite3
+
 from onion_domain import OnionDomain
 
 
