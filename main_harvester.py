@@ -2,11 +2,14 @@ __author__ = 'gru'
 
 import socks
 import socket
-from deeptdotweb_parser import DeepdotwebParser
+import hiddenwiki_parser
+import deepdotweb_parser
+
 from domain_db import OnionDbHandler
-from hiddenwiki_parser import HiddenWikiParser
+
 
 DB_PATH = "./onion_domains.db"
+
 
 def tor_setup():
     # MUST BE SET BEFORE IMPORTING URLLIB
@@ -21,15 +24,34 @@ def tor_setup():
     socket.getaddrinfo = getaddrinfo
 
 
+def check_modules():
+    if "parse_domains" in deepdotweb_parser.__dict__:
+        print("API implemented")
+    else:
+        print("Warning: Not all API functions found in deepdotweb_parser")
+
+    if "parse_domains" in hiddenwiki_parser.__dict__:
+        print("API implemented")
+    else:
+        print("Warning: Not all API functions found in hiddenwiki_parser")
+
+
+def print_harvested_domains(domains):
+        for i in domains:
+            print(i)
+            print("˙\n------")
+        print("Total amount: " + str(
+            len(set(domains))) + " domains parsed")
+
+
 def main():
 
     tor_setup()
+    check_modules()
 
-    onion_domains = DeepdotwebParser().parse_domain_list()
-    DeepdotwebParser.print_harvested_domains()
-
-    onion_domains.union(HiddenWikiParser.parse_domain_list())
-    HiddenWikiParser.print_harvested_domains()
+    onion_domains = deepdotweb_parser.parse_domains()
+    onion_domains.update(hiddenwiki_parser.parse_domains())
+    print_harvested_domains(onion_domains)
 
     db_handler = OnionDbHandler(DB_PATH)
     db_handler.update_db(onion_domains)

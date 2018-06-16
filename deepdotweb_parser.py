@@ -4,7 +4,6 @@ import time
 from bs4 import BeautifulSoup
 import html_harvesting
 from onion_domain import OnionDomain
-from onion_domain_parser import AbstractDomainParser
 
 
 targets = ["https://www.deepdotweb.com/marketplace-directory"
@@ -37,7 +36,7 @@ def parse_domains():
         process.start()
         threads.append(process)
 
-    # We now pause execution on the main thread by 'joining' all of our
+    # pause execution on the main thread by 'joining' all of our
     # started threads.
     # This ensures that each has finished processing the urls.
     for process in threads:
@@ -52,15 +51,12 @@ def parse_domains():
     return onion_domains
 
 
-@staticmethod
 def parse_html(target_url):
     html = html_harvesting.load_cloudflare_page(target_url)
     # print(html)
     soup = BeautifulSoup(html, "html.parser")
     # print(soup)
     return soup
-
-
 
 
 def parse_market_page(target, results, idx):
