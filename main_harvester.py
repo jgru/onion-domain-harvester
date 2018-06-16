@@ -3,8 +3,8 @@ __author__ = 'gru'
 import socks
 import socket
 from deeptdotweb_parser import DeepdotwebParser
-from onion_domain import OnionDbHandler
-from domain_harvester import HtmlHarvester
+from domain_db import OnionDbHandler
+from hiddenwiki_parser import HiddenWikiParser
 
 DB_PATH = "./onion_domains.db"
 
@@ -25,12 +25,14 @@ def main():
 
     tor_setup()
 
-    deep_parser = DeepdotwebParser()
-    deep_parser.parse_domain_list()
-    deep_parser.print_harvested_domains()
+    onion_domains = DeepdotwebParser().parse_domain_list()
+    DeepdotwebParser.print_harvested_domains()
+
+    onion_domains.union(HiddenWikiParser.parse_domain_list())
+    HiddenWikiParser.print_harvested_domains()
 
     db_handler = OnionDbHandler(DB_PATH)
-    db_handler.update_db(deep_parser.onion_domains)
+    db_handler.update_db(onion_domains)
 
 
 if __name__ == "__main__":
