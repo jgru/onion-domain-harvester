@@ -18,26 +18,25 @@ def tor_setup():
     def getaddrinfo(*args):
         return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
 
-    socket.getaddrinfo = getaddrinfo
+    #socket.getaddrinfo = getaddrinfo
 
 
 def main():
+    '''
     htmlHarvester = HtmlHarvester("url", None, None)
     is_obfuscated = htmlHarvester.check_tor_setup()
     print(is_obfuscated)
+    '''
+
     #tor_setup()
 
-    '''
-    # Check, whether ip is obfuscated
-    url = 'http://icanhazip.com/'
-    htmlHarvester = HtmlHarvester(url, None, None)
-    html = htmlHarvester.load_page()
-    print('ip: {}'.format(html.strip()))
+
 
     deepParser = DeepdotwebParser()
     deepParser.parse_market_list()
     deepParser.print_harvested_domains()
 
+    '''
     db_handler = OnionDbHandler(DB_PATH)
     #db_contents = db_handler.retrieve_domains()
     #db_handler.update_db(db_contents)

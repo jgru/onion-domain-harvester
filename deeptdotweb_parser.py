@@ -2,9 +2,9 @@
 from threading import Thread
 from datetime import date
 
-import cfscrape
-from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
+from domain_harvester import HtmlHarvester
 from onion_domain_parser import AbstractOnionDomainParser
 from onion_domain import OnionDomain
 
@@ -59,11 +59,9 @@ class DeepdotwebParser(AbstractOnionDomainParser):
     @staticmethod
     def parse_html(target_url):
         print(target_url)
-        # htmlHarvester = HtmlHarvester(target_url, None, None)
-        # html = htmlHarvester.load_page()
-        scraper = cfscrape.create_scraper()  # returns a CloudflareScraper instance
-        # Or: scraper = cfscrape.CloudflareScraper()  # CloudflareScraper inherits from requests.Session
-        html = scraper.get(target_url).content
+        htmlHarvester = HtmlHarvester(target_url, None, None)
+        html = htmlHarvester.load_cloudflare_page()
+
         # print(html)
         soup = BeautifulSoup(html, "html.parser")
         # print(soup)
