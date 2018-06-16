@@ -22,15 +22,17 @@ def tor_setup():
 
 
 def main():
+    htmlHarvester = HtmlHarvester("url", None, None)
+    is_obfuscated = htmlHarvester.check_tor_setup()
+    print(is_obfuscated)
+    #tor_setup()
 
-    tor_setup()
     '''
     # Check, whether ip is obfuscated
     url = 'http://icanhazip.com/'
     htmlHarvester = HtmlHarvester(url, None, None)
     html = htmlHarvester.load_page()
     print('ip: {}'.format(html.strip()))
-    '''
 
     deepParser = DeepdotwebParser()
     deepParser.parse_market_list()
@@ -42,7 +44,7 @@ def main():
     db_handler.update_db(deepParser.onion_domains)
     # for c in db_contents:
     #    print(c)
-
+    '''
 
 if __name__ == "__main__":
 

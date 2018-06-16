@@ -59,14 +59,14 @@ class DeepdotwebParser(AbstractOnionDomainParser):
     @staticmethod
     def parse_html(target_url):
         print(target_url)
-        #htmlHarvester = HtmlHarvester(target_url, None, None)
-        #html = htmlHarvester.load_page()
+        # htmlHarvester = HtmlHarvester(target_url, None, None)
+        # html = htmlHarvester.load_page()
         scraper = cfscrape.create_scraper()  # returns a CloudflareScraper instance
         # Or: scraper = cfscrape.CloudflareScraper()  # CloudflareScraper inherits from requests.Session
         html = scraper.get(target_url).content
-       # print(html)
+        # print(html)
         soup = BeautifulSoup(html, "html.parser")
-        #print(soup)
+        # print(soup)
         return soup
 
     def print_harvested_domains(self):
