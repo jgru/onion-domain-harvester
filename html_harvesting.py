@@ -20,7 +20,7 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)',
 
 
 def load_page(target_page):
-    req = urllib.request.Request(target_page, data, hdr, 5)
+    req = urllib.request.Request(target_page, data, hdr)
     try:
         response = urllib.request.urlopen(req)
         html = response.read()
