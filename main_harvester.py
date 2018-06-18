@@ -49,7 +49,7 @@ def main(db):
     tor_setup()
     check_modules()
 
-    onion_domains = set() #deepdotweb_parser.parse_domains()
+    onion_domains = deepdotweb_parser.parse_domains()
     onion_domains.update(hiddenwiki_parser.parse_domains())
     print_harvested_domains(onion_domains)
     stop_tor(tor_process)

@@ -2,6 +2,9 @@ __author__ = 'gru'
 
 import urllib.request
 import cfscrape
+import socket
+import threading
+import time
 
 data = None
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)',
@@ -17,10 +20,19 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)',
 
 
 def load_page(target_page):
-    req = urllib.request.Request(target_page, data, hdr)
-    with urllib.request.urlopen(req) as response:
+    req = urllib.request.Request(target_page, data, hdr, 5)
+    try:
+        response = urllib.request.urlopen(req)
         html = response.read()
         return html
+    except socket.timeout:
+        print("Socket timeout")
+        pass
+    except socket.error:
+        print("Socket error")
+        pass
+
+    return ""
 
 
 def load_cloudflare_page(target_page):
