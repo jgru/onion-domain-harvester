@@ -44,6 +44,7 @@ def print_harvested_domains(domains):
 
 
 def main(db):
+
     tor_process = start_tor_service()
     tor_setup()
     check_modules()
@@ -80,6 +81,7 @@ def stop_tor(p):
 
 
 if __name__ == "__main__":
+    print("Starting onion_domain harvester")
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--database", required=False, default="./onion_domains.db",
                         help="path to database (will be created if not existing")
