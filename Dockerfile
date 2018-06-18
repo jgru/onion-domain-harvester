@@ -9,7 +9,7 @@ VOLUME ["/usr/src/app/data"]
 RUN git clone https://github.com/jgru/onion-domain-harvester.git
 RUN pip install --no-cache-dir -r ./onion-domain-harvester/requirements.txt
 
-COPY ./onion-domain-harvester/crontab /etc/cron.d/crontab
-RUN crontab /etc/cron.d/crontab
+RUN mv ./onion-domain-harvester/crontab /etc/cron.d/crontab
+#RUN crontab /etc/cron.d/crontab
 
-CMD sudo service cron reload
+CMD cron -f
