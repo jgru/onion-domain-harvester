@@ -1,14 +1,12 @@
 __author__ = 'gru'
 
+import argparse
 import socks
 import socket
 import hiddenwiki_parser
 import deepdotweb_parser
 
 from domain_db import OnionDbHandler
-
-
-DB_PATH = "./onion_domains.db"
 
 
 def tor_setup():
@@ -37,15 +35,14 @@ def check_modules():
 
 
 def print_harvested_domains(domains):
-        for i in domains:
-            print(i)
-            print("˙\n------")
-        print("Total amount: " + str(
-            len(set(domains))) + " domains parsed")
+    for i in domains:
+        print(i)
+        print("˙\n------")
+    print("Total amount: " + str(
+        len(set(domains))) + " domains parsed")
 
 
-def main():
-
+def main(db):
     tor_setup()
     check_modules()
 
@@ -53,9 +50,13 @@ def main():
     onion_domains.update(hiddenwiki_parser.parse_domains())
     print_harvested_domains(onion_domains)
 
-    db_handler = OnionDbHandler(DB_PATH)
+    db_handler = OnionDbHandler(db)
     db_handler.update_db(onion_domains)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--database", required=False, default="./onion_domains.db",
+                        help="path to database (will be created if not existing")
+    args = parser.parse_args()
+    main(args.database)

@@ -10,11 +10,11 @@ from onion_domain import OnionDomain
 
 class OnionDbHandler:
 
-    def __init__(self, db_path):
-        self.db_path = db_path
+    def __init__(self, db):
+        self.db = db
         # Create an engine that stores data in the local directory's
         # sqlalchemy_example.db file.
-        self.engine = create_engine('sqlite:///' + self.db_path)
+        self.engine = create_engine('sqlite:///' + self.db)
 
         # Create all tables in the engine. This is equivalent to "Create Table"
         # statements in raw SQL.
