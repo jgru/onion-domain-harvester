@@ -44,14 +44,14 @@ def print_harvested_domains(domains):
 
 
 def main(db):
-    #tor_process = start_tor_service()
+    tor_process = start_tor_service()
     tor_setup()
     check_modules()
 
     onion_domains = set() #deepdotweb_parser.parse_domains()
     onion_domains.update(hiddenwiki_parser.parse_domains())
     print_harvested_domains(onion_domains)
-    #stop_tor(tor_process)
+    stop_tor(tor_process)
 
     db_handler = OnionDbHandler(db)
     db_handler.update_db(onion_domains)
