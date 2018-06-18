@@ -14,4 +14,4 @@ Python packages
 * sqlalchemy
 
 Other dependencies
-* tor (Make sure Tor is up and running under http://localhost:9050)
+* tor (Make sure Tor is up and running under http://localhost:9050 by entereing 'netstat -tlnp')

@@ -13,7 +13,7 @@ def parse_html(target_url):
     html = html_harvesting.load_page(target_url)
     #print(html)
     soup = BeautifulSoup(html, "html.parser")
-    #print(soup)
+    print(soup)
     return soup
 
 
