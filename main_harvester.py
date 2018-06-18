@@ -1,5 +1,6 @@
 __author__ = 'gru'
 
+import subprocess
 import argparse
 import socks
 import socket
@@ -43,15 +44,27 @@ def print_harvested_domains(domains):
 
 
 def main(db):
+    tor_process = start_tor_service()
     tor_setup()
     check_modules()
 
     onion_domains = deepdotweb_parser.parse_domains()
     onion_domains.update(hiddenwiki_parser.parse_domains())
     print_harvested_domains(onion_domains)
+    stop_tor(tor_process)
 
     db_handler = OnionDbHandler(db)
     db_handler.update_db(onion_domains)
+
+
+def start_tor_service():
+    p = subprocess.Popen(["tor"])
+    print("Tor started")
+    return p
+
+
+def stop_tor(p):
+    p.terminate()
 
 
 if __name__ == "__main__":
@@ -59,4 +72,5 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--database", required=False, default="./onion_domains.db",
                         help="path to database (will be created if not existing")
     args = parser.parse_args()
+
     main(args.database)
