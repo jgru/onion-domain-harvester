@@ -1,0 +1,2 @@
+0 7 * * 0-5 python /usr/src/app/onion-domain-harvester/main_harvester.py -d /usr/src/app/data
+# Mandatory blank line
