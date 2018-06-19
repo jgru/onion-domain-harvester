@@ -83,7 +83,7 @@ def stop_tor(p):
 if __name__ == "__main__":
     print("Starting onion_domain harvester")
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--databaseDirectory", required=False, default="./",
+    parser.add_argument("-d", "--databaseDirectory", required=False, default="../",
                         help="path to database directory")
     args = parser.parse_args()
 
