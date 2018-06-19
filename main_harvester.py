@@ -43,7 +43,7 @@ def print_harvested_domains(domains):
         len(set(domains))) + " domains parsed")
 
 
-def main(db):
+def main(db_dir):
 
     tor_process = start_tor_service()
     tor_setup()
@@ -54,7 +54,7 @@ def main(db):
     print_harvested_domains(onion_domains)
     stop_tor(tor_process)
 
-    db_handler = OnionDbHandler(db)
+    db_handler = OnionDbHandler(db_dir)
     db_handler.update_db(onion_domains)
 
 
@@ -83,8 +83,8 @@ def stop_tor(p):
 if __name__ == "__main__":
     print("Starting onion_domain harvester")
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--database", required=False, default="./onion_domains.db",
-                        help="path to database (will be created if not existing")
+    parser.add_argument("-d", "--databaseDirectory", required=False, default="./",
+                        help="path to database directory")
     args = parser.parse_args()
 
-    main(args.database)
+    main(args.databaseDirectory)

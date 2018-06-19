@@ -25,9 +25,6 @@ def load_page(target_page):
         response = urllib.request.urlopen(req)
         html = response.read()
         return html
-    except socket.timeout:
-        print("Socket timeout")
-        pass
     except socket.error:
         print("Socket error")
         pass

@@ -1,2 +1,2 @@
-0 * * * * python /usr/src/app/onion-domain-harvester/main_harvester.py -d /usr/src/app/data >>/var/log/cron.log 2>&1
+* /3 * * * python /usr/src/app/onion-domain-harvester/main_harvester.py -d /usr/src/app/data 
 # Mandatory blank line

@@ -6,12 +6,12 @@ __author__ = 'gru'
 
 
 from onion_domain import OnionDomain
-
+DB_NAME = "onion_domains.db"
 
 class OnionDbHandler:
 
-    def __init__(self, db):
-        self.db = db
+    def __init__(self, db_dir):
+        self.db = db_dir + "/" + DB_NAME
         # Create an engine that stores data in the local directory's
         # sqlalchemy_example.db file.
         self.engine = create_engine('sqlite:///' + self.db)
