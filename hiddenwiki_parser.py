@@ -3,6 +3,7 @@ import time
 from bs4 import BeautifulSoup
 import html_harvesting
 from onion_domain import OnionDomain
+import logging
 
 __author__ = 'gru'
 
@@ -21,7 +22,7 @@ def parse_html(target_url):
 def parse_domains():
     onion_domains = set()
     start_time = time.time()
-    print("Parsing " + target)
+    logging.info("Parsing " + target)
     soup = parse_html(target)
     entries = soup.find_all("a", class_="external text")
     for e in entries:
@@ -40,7 +41,7 @@ def parse_domains():
             print(title, description)
         onion_domains.add(parsed_domain)
 
-    print("Elapsed time: " + str(time.time() - start_time) + " secs")
+    logging.info("Elapsed time: " + str(time.time() - start_time) + " secs")
 
     return onion_domains
 

@@ -1,13 +1,16 @@
-__author__ = 'gru'
+import logging
 
 import subprocess
 import argparse
-import socks
 import socket
+import socks
 import hiddenwiki_parser
 import deepdotweb_parser
 
 from domain_db import OnionDbHandler
+
+
+__author__ = 'gru'
 
 
 def tor_setup():
@@ -25,21 +28,21 @@ def tor_setup():
 
 def check_modules():
     if "parse_domains" in deepdotweb_parser.__dict__:
-        print("API implemented")
+        logging.info("API implemented")
     else:
-        print("Warning: Not all API functions found in deepdotweb_parser")
+        logging.info("Warning: Not all API functions found in deepdotweb_parser")
 
     if "parse_domains" in hiddenwiki_parser.__dict__:
-        print("API implemented")
+        logging.info("API implemented")
     else:
-        print("Warning: Not all API functions found in hiddenwiki_parser")
+        logging.info("Warning: Not all API functions found in hiddenwiki_parser")
 
 
 def print_harvested_domains(domains):
     for i in domains:
-        print(i)
-        print("˙\n------")
-    print("Total amount: " + str(
+        logging.info(i)
+        logging.info("\n------")
+    logging.info("Total amount: " + str(
         len(set(domains))) + " domains parsed")
 
 
@@ -62,8 +65,9 @@ SPECIFIC_STRING = "Bootstrapped 100%"
 
 
 def start_tor_service():
+    logging.info("Trying to start Tor")
     p = subprocess.Popen(["tor"], stdout=subprocess.PIPE, universal_newlines=True)
-    print("Tor started")
+    logging.info("Tor started")
 
     # Wait until tor setup is complete
     while True:
@@ -81,9 +85,11 @@ def stop_tor(p):
 
 
 if __name__ == "__main__":
-    print("Starting onion_domain harvester")
+    logging.basicConfig(filename='./error.log', level=logging.DEBUG)
+    logging.info("Trying to start onion_domain harvester")
+    logging.info("Starting onion_domain harvester")
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--databaseDirectory", required=False, default="../",
+    parser.add_argument("-d", "--databaseDirectory", required=False, default="./",
                         help="path to database directory")
     args = parser.parse_args()
 

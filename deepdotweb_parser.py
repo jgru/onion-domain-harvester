@@ -4,7 +4,7 @@ import time
 from bs4 import BeautifulSoup
 import html_harvesting
 from onion_domain import OnionDomain
-
+import logging
 
 targets = ["https://www.deepdotweb.com/marketplace-directory"
                       "/categories/non-english/",
@@ -42,7 +42,7 @@ def parse_domains():
     for process in threads:
         process.join()
 
-    print("Elapsed time: " + str(time.time() - start_time) + " secs")
+    logging.info("Elapsed time: " + str(time.time() - start_time) + " secs")
 
     for li in results:
         for el in li:
@@ -60,7 +60,7 @@ def parse_html(target_url):
 
 
 def parse_market_page(target, results, idx):
-    print("Parsing " + target + " in thread #" + str(idx))
+    logging.info("Parsing " + target + " in thread #" + str(idx))
 
     soup = parse_html(target)
 
@@ -104,4 +104,4 @@ def print_time(thread_name, delay):
     while count < 5:
         time.sleep(delay)
         count += 1
-        print(thread_name + "  " + time.ctime(time.time()))
+        logging.info(thread_name + "  " + time.ctime(time.time()))

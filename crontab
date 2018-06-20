@@ -1,2 +1,3 @@
-* /3 * * * python /usr/src/app/onion-domain-harvester/main_harvester.py -d /usr/src/app/data 
+*/1 * * * * cd /usr/src/app/onion-domain-harvester && /usr/local/bin/python main_harvester.py 
 # Mandatory blank line
+
