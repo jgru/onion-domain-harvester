@@ -85,11 +85,11 @@ def stop_tor(p):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='./error.log', level=logging.DEBUG)
+    logging.basicConfig(filename='../data/error.log', level=logging.DEBUG)
     logging.info("Trying to start onion_domain harvester")
     logging.info("Starting onion_domain harvester")
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--databaseDirectory", required=False, default="./",
+    parser.add_argument("-d", "--databaseDirectory", required=False, default="../data/",
                         help="path to database directory")
     args = parser.parse_args()
 
