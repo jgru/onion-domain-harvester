@@ -24,7 +24,6 @@ class OnionDbHandler:
             OnionDomain.metadata.create_all(self.engine)
 
 
-
         # A DBSession() instance establishes all conv   ersations with the database
         # and represents a "staging zone" for all the objects loaded into the
         # database session object.
