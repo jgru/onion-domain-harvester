@@ -1,0 +1,7 @@
+# How to run the Docker container
+## Build image
+docker build --no-cache -t onion_harvester .
+
+## Run container
+docker run -d -v ~/tmp/data:/usr/src/app/data --name harvesterd onion_harvester
+
