@@ -93,7 +93,8 @@ if __name__ == "__main__":
                         help="path to database directory")
     args = parser.parse_args()
 
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s %(message)s',
+                datefmt='%m/%d/%Y %I:%M:%S %p', stream=sys.stdout, level=logging.DEBUG)
     # Alternatively: logging.basicConfig(filename=args.logFile, mode="a", level=logging.DEBUG)
 
     logging.info("Trying to start onion_domain harvester")

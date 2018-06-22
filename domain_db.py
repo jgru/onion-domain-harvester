@@ -1,12 +1,13 @@
+__author__ = 'gru'
+
 import datetime
+import logging
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import sessionmaker
 
-__author__ = 'gru'
-
-
 from onion_domain import OnionDomain
 DB_NAME = "onion_domains.db"
+
 
 class OnionDbHandler:
 
@@ -37,6 +38,7 @@ class OnionDbHandler:
         self.session = DBSession()
 
     def update_db(self, onion_domains):
+        logging.info("Updating completed")
         for d in onion_domains:
             is_existing = self.session.query(exists().where(
                 OnionDomain.url == d.url)).scalar()
@@ -49,6 +51,7 @@ class OnionDbHandler:
                 # Insert new domain in table
                 self.session.add(d)
                 self.session.commit()
+        logging.info("Database update completed")
 
     def retrieve_domains(self):
         domains = self.session.query(OnionDomain).all()
