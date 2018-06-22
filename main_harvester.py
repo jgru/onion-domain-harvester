@@ -1,5 +1,5 @@
 import logging
-
+import sys
 import subprocess
 import argparse
 import socket
@@ -16,9 +16,11 @@ __author__ = 'gru'
 def tor_setup():
     # MUST BE SET BEFORE IMPORTING URLLIB
     socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "localhost", 9050)
+    logging.info("Set default proxy")
     # patch the socket module
     socket.socket = socks.socksocket
-    socket.timeout = 5
+    logging.info("Set socks")
+    socket.timeout = 10
     # solution to prevent DNS leaks over a socks4/5 proxy
     def getaddrinfo(*args):
         return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
@@ -72,9 +74,9 @@ def start_tor_service():
     # Wait until tor setup is complete
     while True:
         output = p.stdout.readline()
-        print(output.strip())
+        logging.info(output.strip())
         if SPECIFIC_STRING in output:
-            print("Tor setup complete")
+            logging.info("Tor setup complete")
             break
 
     return p
@@ -85,12 +87,16 @@ def stop_tor(p):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='../data/error.log', level=logging.DEBUG)
-    logging.info("Trying to start onion_domain harvester")
-    logging.info("Starting onion_domain harvester")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--databaseDirectory", required=False, default="../data/",
                         help="path to database directory")
     args = parser.parse_args()
+
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    # Alternatively: logging.basicConfig(filename=args.logFile, mode="a", level=logging.DEBUG)
+
+    logging.info("Trying to start onion_domain harvester")
+    logging.debug("Starting onion_domain harvester")
 
     main(args.databaseDirectory)
