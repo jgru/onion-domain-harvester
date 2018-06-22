@@ -38,7 +38,7 @@ class OnionDbHandler:
         self.session = DBSession()
 
     def update_db(self, onion_domains):
-        logging.info("Updating completed")
+        logging.info("Updating started")
         for d in onion_domains:
             is_existing = self.session.query(exists().where(
                 OnionDomain.url == d.url)).scalar()
