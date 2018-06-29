@@ -1,14 +1,17 @@
 from datetime import date
 import time
+import logging
+
 from bs4 import BeautifulSoup
+
 import html_harvesting
 from onion_domain import OnionDomain
-import logging
+
 
 __author__ = 'gru'
 
-target = "http://zqktlwi4fecvo6ri.onion/wiki/index.php/Main_Page"
-
+targets = ["http://zqktlwi4fecvo6ri.onion/wiki/index.php/Main_Page",
+           "http://uhwikih256ynt57t.onion/wiki/index.php/Darknet_Markets"]
 
 
 def parse_html(target_url):
@@ -19,7 +22,7 @@ def parse_html(target_url):
     return soup
 
 
-def parse_domains():
+def parse_hidden_wiki(target):
     onion_domains = set()
     start_time = time.time()
     logging.info("Parsing " + target)
@@ -42,8 +45,20 @@ def parse_domains():
         onion_domains.add(parsed_domain)
 
     logging.info("Elapsed time: " + str(time.time() - start_time) + " secs")
+    return onion_domains
+
+
+def parse_domains():
+    onion_domains = set()
+    for t in targets:
+        onion_domains.update(parse_hidden_wiki(t))
 
     return onion_domains
+
+
+
+
+
 
 
 

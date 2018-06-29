@@ -53,10 +53,12 @@ def main(db_dir):
     tor_process = start_tor_service()
     tor_setup()
     check_modules()
+    hiddenwiki_parser.parse_domains()
 
     onion_domains = deepdotweb_parser.parse_domains()
     onion_domains.update(hiddenwiki_parser.parse_domains())
     print_harvested_domains(onion_domains)
+
     stop_tor(tor_process)
 
     db_handler = OnionDbHandler(db_dir)
