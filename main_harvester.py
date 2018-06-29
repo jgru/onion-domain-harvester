@@ -42,8 +42,8 @@ def check_modules():
 
 def print_harvested_domains(domains):
     for i in domains:
-        logging.info(i)
-        logging.info("\n------")
+        logging.info(str(i) + "\n-----")
+
     logging.info("Total amount: " + str(
         len(set(domains))) + " domains parsed")
 
@@ -53,7 +53,7 @@ def main(db_dir):
     tor_process = start_tor_service()
     tor_setup()
     check_modules()
-    hiddenwiki_parser.parse_domains()
+    onion_domains = hiddenwiki_parser.parse_domains()
 
     onion_domains = deepdotweb_parser.parse_domains()
     onion_domains.update(hiddenwiki_parser.parse_domains())
