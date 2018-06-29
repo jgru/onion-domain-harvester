@@ -1,5 +1,7 @@
 __author__ = 'gru'
 
+import os
+import errno
 import datetime
 import logging
 from sqlalchemy import create_engine, exists
@@ -13,8 +15,8 @@ class OnionDbHandler:
 
     def __init__(self, db_dir):
         self.db = db_dir + "/" + DB_NAME
-        # Create an engine that stores data in the local directory's
-        # sqlalchemy_example.db file.
+        self.check_dir(db_dir)
+        # Create an engine that stores data in the specified directory
         self.engine = create_engine('sqlite:///' + self.db)
 
         # Create all tables in the engine. This is equivalent to "Create Table"
@@ -36,6 +38,14 @@ class OnionDbHandler:
         # revert all of them back to the last commit by calling
         # session.rollback()
         self.session = DBSession()
+
+    @staticmethod
+    def check_dir(db_dir):
+        try:
+            os.makedirs(db_dir)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
 
     def update_db(self, onion_domains):
         logging.info("Updating started")
